@@ -19,7 +19,7 @@ if you are not familiar with this concept since Flask uses it a lot.
    * What is the role of each file?
    * How do we pass data from the server to the templates?
    * Does `{{ ... }}` and `{% ... %}` belong to HTML? What are their role?
-   * With the `/demo/` route, can we perform the attack described at the end of 
+   * With the `/demo/` route, can we perform the attack described at the end of
      [the lecture's slides](https://slides.com/sebbes/http-communication)?
 1. Modify the home page to display a form with `method=POST`, `action=/new-shortcut`,
    containing a text field named `url` and a submit button.
@@ -29,7 +29,7 @@ if you are not familiar with this concept since Flask uses it a lot.
    * generate a new key for this key (use the given function!),
    * add the key/url in the dict `SHORTCUTS`,
    * send the new key back as raw text.
-1. Answer directly to a `POST` request 
+1. Answer directly to a `POST` request
    is not great: if the user refreshes the page (e.g. with "F5"),
    the POST request will be played again, creating a new ressource. The good
    practice is to redirect the browser to a GET request.
@@ -45,7 +45,7 @@ if you are not familiar with this concept since Flask uses it a lot.
 1. Keep in mind that the requests are "user input". So you CAN NOT suppose the request is correctly formed.
    For instance, what is happening if the `url` parameter is missing in a request to `/new-shortcut`?
    Try to spot all the places where things can go wrong and handle all the possible cases.
-   
+
    Note:
    you can use the following schema when searching data in a dictionnary:
    ```python
@@ -64,8 +64,8 @@ if you are not familiar with this concept since Flask uses it a lot.
    The number after the comma is the HTTP code for `Bad request`. You may also need
    the code `404 Not Found` for other handlers.
 
-## Perform the redirection   
-   
+## Perform the redirection
+
 1. Create a handler `/r/<key>` which actually redirects the requests to the destination.
    Name the function `redir`.
    This route should simply look in the `SHORTCUTS` dict and return a redirection.
@@ -86,7 +86,7 @@ We will enable  the users to search over all the shortened links.
 1. In the home page, create a `GET`-form with a text field named `query` and a submit button.
 1. Catch the request sent by this form in a handler and list all the keys/urls such as
    the query is part of the url; store these pairs of key/urls in a list of tuples.
-   
+
    Note: to check if a string `s1` is a substring of another string `s2` we can
    use:
    ```python
@@ -94,7 +94,7 @@ We will enable  the users to search over all the shortened links.
    ```
    wich will return a boolean.
 1. You can perform loops and conditionnal branching in the templates with the following Jinja tags,
-   for example: 
+   for example:
     ```jinja2
     <ul>
     {% for element in list %}
@@ -119,7 +119,7 @@ in production:
 * the data are deleted each time the server restarts (it happens for instance each you modify the source code),
 * each request runs in its own thread; if two simultaneous requests write data in `SHORTCUTS` at the same time,
   it can mess up the internal structure of `SHORTCUTS` thus make it unusable.
-  
+
 Instead, we will use a SQL database. For the sake of simplicity, we will use SQLite3 which is natively
 supported in Python. Once again, this tool is not the best fit for "real applications" with regards
 to performance, but it solves the two above issues and should be sufficient for the projects you will
@@ -147,7 +147,7 @@ This part will mainly consist in observing existing code and understand how it w
 
     print("Table created!")
 
-    cur.execute('INSERT INTO shortcuts VALUES (?, ?), (?, ?) ', 
+    cur.execute('INSERT INTO shortcuts VALUES (?, ?), (?, ?) ',
                 ('EbA356Ak', "http://www.example.com", 'aoM4apKh', "http://www.mozilla.org")
     )
 
@@ -169,18 +169,17 @@ This part will mainly consist in observing existing code and understand how it w
       next lesson, we will see WHY we should not use naive string interpolation
       like `.format(...)`.
 1. The script you have pasted is not executed by default, you have
-     to manually run it (which is preferable: 
+     to manually run it (which is preferable:
      we do not want to erase the whole database each time the app starts).
-     Open the glitch console (`Tools > Logs > Console` or `Tools > Full page console`) 
+     Open the glitch console (`Tools > Logs > Console` or `Tools > Full page console`)
      and run `python3 db_init.py`.Then, you can launch `sqlite3 .data/shortcuts.db`:
      you can type SQL commands like `SELECT * FROM shortcuts;` (do not forget the
      ending `;`!).
-1. [Inspect the server code of the solution](https://glitch.com/edit/#!/u?path=server.py) (or
-   copy-paste the `server.py` in your `server.py`). For each handler, read the corresponding 
+1. [Inspect the server code of the solution](https://glitch.com/edit/#!/eh?path=server.py) (or
+   copy-paste the `server.py` in your `server.py`). For each handler, read the corresponding
    code. You should be able to understand the role of:
    * `cur.execute(...)`,
    * `cur.fetchone()`,
    * `cur.fetchall()`,
    * `db.commit()` (note that we are commiting on the "database" and not on the "cursor").
-   
-  
+
