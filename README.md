@@ -25,7 +25,7 @@ in Python](https://treyhunner.com/2018/04/keyword-arguments-in-python/#What_are_
    containing a text field named `url` and a submit button.
 1. Add a handler in the server which catches the `POST` requests on the `/new-shortcut` route.
    This handler will:
-   * get the url sent by the user: you will need to use `request.args` (`request` has to be imported from the `flask` module),
+   * get the url sent by the user: you will need to use `request.form` (`request` has to be imported from the `flask` module),
    * generate a new key for this key (use the given function!),
    * add the key/url in the `SHORTCUTS` dict,
    * send the new key back as raw text.
