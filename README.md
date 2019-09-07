@@ -6,6 +6,8 @@ for the web.
 
 1. Make the name of the project as short as possible (all one letter names seem to be taken on Glitch; you may have a chance with a two-letter name.).
 
+**Note:** the "Show > next to the code" feature is a bit buggy in Glit when dealing
+with redirections. You should use "Show > in a new window" instead.
 
 ## A bit of Python
 
